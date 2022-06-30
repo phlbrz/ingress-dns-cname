@@ -32,7 +32,7 @@ cd ingress-dns-cname
 - Make a build
 
 ```shell
-docker build -t ingress-dns-cname:1.0.0-dev .
+docker build -t ingress-dns-cname:v1.0.0 .
 ```
 
 - Run image
@@ -51,6 +51,6 @@ docker build -t ingress-dns-cname:1.0.0-dev .
 # AD_USER: eg.: AD_USER="useraccount"
 # AD_PASS: eg.: AD_PASS="changeit"
 
-docker run -it -e PLAYBOOK="publish-cname-dns.yml" -e FILENAME="/home/ansible/file.txt" -e USER_AD="useraccount" -e USER_PASS="changeit" ingress-dns-cname:1.0.0-dev
+docker run -it -e PLAYBOOK="publish-cname-dns.yml" -e FILENAME="/home/ansible/file.txt" -e AD_USER="useraccount" -e AD_PASS="changeit" ingress-dns-cname:1.0.0-dev
 
 ```
