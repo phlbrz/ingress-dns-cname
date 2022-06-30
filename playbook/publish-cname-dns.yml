@@ -1,0 +1,23 @@
+---
+- name: Create a CNAME DNS in ZONE
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_scheme: https
+    ansible_port: 5986
+    ansible_winrm_server_cert_validation: ignore
+    ansible_user: "{{ lookup('env','AD_USER') }}"
+    ansible_password: "{{ lookup('env','AD_PASS') }}"
+
+  tasks:
+    - name: Publishing a CNAME DNS in zone
+      win_dns_record:
+        name: "{{ item }}"
+        type: "CNAME"
+        value: "lookup('env','CNAME_FQDN')"
+        zone: "lookup('env','ZONE_FQDN')"
+        computer_name: "lookup('env','COMPUTER_FQDN')"
+      loop: "{{ lookup('file', lookup('env','FILENAME') ).splitlines() }}"
+      when: item != ""
